@@ -6,7 +6,6 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useLocation } from "react-router-dom";
 import "./tailwind.css";
 
