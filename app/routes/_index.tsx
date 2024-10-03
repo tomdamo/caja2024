@@ -1,10 +1,10 @@
-import { act, useEffect } from "react";
+import { useEffect } from "react";
 import type { MetaFunction } from "@remix-run/node";
 
 export const meta: MetaFunction = () => {
   return [
     { title: "Caja Boogers" },
-    { name: "description", content: "Caja Boogers Portfolio" },
+    { description: "Caja Boogers (Vlaardingen, 2001) offical website.", content: "Caja Boogers Art Portfolio" },
   ];
 };
 
@@ -30,75 +30,101 @@ export default function Index() {
   // Bootstrap Carousel Initialization
   useEffect(() => {
     // Import Bootstrap JS
-    const bootstrapScript = document.createElement('script');
+    const bootstrapScript = document.createElement("script");
     bootstrapScript.src = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js";
     bootstrapScript.async = true;
     document.body.appendChild(bootstrapScript);
+
+    bootstrapScript.onload = () => {
+      const carouselElements = document.querySelectorAll('.carousel');
+      carouselElements.forEach(carousel => {
+        const bootstrapCarousel = new window.bootstrap.Carousel(carousel, {
+          interval: 3000, // Slide every 3 seconds
+          ride: 'carousel',
+        });
+      });
+    };
   }, []);
 
   return (
     <div className="min-h-screen flex flex-col">
-    <img
-      src="https://utfs.io/f/eySWb67X0LypH3VN2kbpSQlyWpGw2JPZeaEqmcL1fFsOBC0d"
-      alt="Caja Boogers"
-      className="w-24 h-24 md:w-32 md:h-32 object-cover self-center mb-1 md:mb-12" 
-            />
-    <main className="flex-grow container mx-auto py-8 md:py-16">
-      {/* Bootstrap Carousel - Main Images */}
-      <div id="carouselExampleIndicators" className="carousel slide mb-16 md:mb-32" data-bs-ride="carousel" data-bs-interval="3000">
-        <div className="carousel-indicators">
-          {images.map((_, index) => (
-            <button
-              key={index}
-              type="button"
-              data-bs-target="#carouselExampleIndicators"
-              data-bs-slide-to={index}
-              className={index === 0 ? "active" : ""}
-              aria-current={index === 0 ? "true" : "false"}
-              aria-label={`Slide ${index + 1}`}
-            ></button>
-          ))}
+      <img
+        src="https://utfs.io/f/eySWb67X0LypH3VN2kbpSQlyWpGw2JPZeaEqmcL1fFsOBC0d"
+        alt="Caja Boogers"
+        className="w-24 h-24 md:w-32 md:h-32 object-cover self-center mb-1 md:mb-12"
+      />
+      <h1 className="sr-only">Caja Boogers - Artist Portfolio</h1>
+      <main className="flex-grow container mx-auto py-8 md:py-16">
+        {/* Bootstrap Carousel - Main Images */}
+        <div
+          id="carouselExampleIndicators"
+          className="carousel slide mb-16 md:mb-32"
+          data-bs-ride="carousel"
+          data-bs-interval="3000"
+        >
+          <div className="carousel-indicators">
+            {images.map((_, index) => (
+              <button
+                key={index}
+                type="button"
+                data-bs-target="#carouselExampleIndicators"
+                data-bs-slide-to={index}
+                className={index === 0 ? "active" : ""}
+                aria-current={index === 0 ? "true" : "false"}
+                aria-label={`Slide ${index + 1}`}
+              ></button>
+            ))}
+          </div>
+
+          <div className="carousel-inner">
+            {images.map((image, index) => (
+              <div key={index} className={`carousel-item ${index === 0 ? "active" : ""}`}>
+                <img
+                  src={image}
+                  className="d-block w-screen h-128 md:h-screen object-contain"
+                  alt={`Slide ${index + 1}`}
+                  loading={"eager"}
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="carousel-inner">
-          {images.map((image, index) => (
-            <div key={index} className={`carousel-item ${index === 0 ? "active" : ""}`}>
-              <img src={image} className="d-block w-screen h-128 md:h-screen object-contain" alt={`Slide ${index + 1}`} />
-            </div>
-          ))}
-        </div>
-      </div>
+        {/* Horizontal Carousel */}
+        <div
+          id="carouselHorizontal"
+          className="carousel slide mb-8 md:mb-16"
+          data-bs-ride="carousel"
+          data-bs-interval="3000"
+        >
+          <div className="carousel-indicators">
+            {horizontalImages.map((_, index) => (
+              <button
+                key={index}
+                type="button"
+                data-bs-target="#carouselHorizontal"
+                data-bs-slide-to={index}
+                className={index === 0 ? "active" : ""}
+                aria-current={index === 0 ? "true" : "false"}
+                aria-label={`Slide ${index + 1}`}
+              ></button>
+            ))}
+          </div>
 
-      {/* Horizontal Carousel */}
-      <div 
-      id="carouselHorizontal" 
-      className="carousel slide mb-8 md:mb-16" 
-      data-bs-ride="carousel"
-      data-bs-interval="3000">  
-        <div className="carousel-indicators">
-          {horizontalImages.map((_, index) => (
-            <button
-              key={index}
-              type="button"
-              data-bs-target="#carouselHorizontal"
-              data-bs-slide-to={index}
-              className={index === 0 ? "active" : ""}
-              aria-current={index === 0 ? "true" : "false"}
-              aria-label={`Slide ${index + 1}`}
-            ></button>
-          ))}
+          <div className="carousel-inner">
+            {horizontalImages.map((image, index) => (
+              <div key={index} className={`carousel-item ${index === 0 ? "active" : ""}`}>
+                <img
+                  src={image}
+                  className="d-block w-screen h-96 object-contain"
+                  alt={`Slide ${index + 1}`}
+                  loading={"eager"}
+                />
+              </div>
+            ))}
+          </div>
         </div>
-
-        <div className="carousel-inner">
-          {horizontalImages.map((image, index) => (
-            <div key={index} className={`carousel-item ${index === 0 ? "active" : ""}`}>
-              <img src={image} className="d-block w-screen h-96 object-contain" alt={`Slide ${index + 1}`} />
-            </div>
-          ))}
-        </div>
-      </div>
-
-    </main>
-  </div>
-);
+      </main>
+    </div>
+  );
 }
